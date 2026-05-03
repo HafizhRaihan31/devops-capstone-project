@@ -18,7 +18,7 @@ This project implements a Customer Accounts microservice.
 * Docker
 * Kubernetes / OpenShift
 * Tekton CI/CD
-
+* Update security headers and CORS
 ## Author
 
 Hafizh
