@@ -13,8 +13,9 @@ from service.common import status  # HTTP Status Codes
 from service.models import db, Account, init_db
 from service.routes import app
 
+# 🔥 GANTI ke SQLite supaya tidak error PostgreSQL
 DATABASE_URI = os.getenv(
-    "DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/postgres"
+    "DATABASE_URI", "sqlite:///test.db"
 )
 
 BASE_URL = "/accounts"
@@ -37,17 +38,17 @@ class TestAccountService(TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        """Runs once before test suite"""
+        """Runs once after all tests"""
+        pass
 
     def setUp(self):
         """Runs before each test"""
-        db.session.query(Account).delete()  # clean up the last tests
+        db.session.query(Account).delete()
         db.session.commit()
-
         self.client = app.test_client()
 
     def tearDown(self):
-        """Runs once after each test case"""
+        """Runs after each test"""
         db.session.remove()
 
     ######################################################################
@@ -71,7 +72,7 @@ class TestAccountService(TestCase):
         return accounts
 
     ######################################################################
-    #  A C C O U N T   T E S T   C A S E S
+    #  A C C O U N T   T E S T S
     ######################################################################
 
     def test_index(self):
@@ -96,11 +97,9 @@ class TestAccountService(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        # Make sure location header is set
         location = response.headers.get("Location", None)
         self.assertIsNotNone(location)
 
-        # Check the data is correct
         new_account = response.get_json()
         self.assertEqual(new_account["name"], account.name)
         self.assertEqual(new_account["email"], account.email)
@@ -123,4 +122,11 @@ class TestAccountService(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
-    # ADD YOUR TEST CASES HERE ...
+    ######################################################################
+    #  🔐 S E C U R I T Y   T E S T S
+    ######################################################################
+
+    def test_security_headers(self):
+        """It should include security headers"""
+        response = self.client.get("/")
+        self.assertIn("X-Frame-Options", response.headers)
