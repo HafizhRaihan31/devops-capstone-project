@@ -13,7 +13,7 @@ from service.common import status  # HTTP Status Codes
 from service.models import db, Account, init_db
 from service.routes import app
 
-# 🔥 GANTI ke SQLite supaya tidak error PostgreSQL
+# 🔥 Gunakan SQLite supaya tidak error PostgreSQL
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "sqlite:///test.db"
 )
@@ -130,3 +130,12 @@ class TestAccountService(TestCase):
         """It should include security headers"""
         response = self.client.get("/")
         self.assertIn("X-Frame-Options", response.headers)
+
+    ######################################################################
+    #  🌐 C O R S   T E S T S
+    ######################################################################
+
+    def test_cors_headers(self):
+        """It should include CORS headers"""
+        response = self.client.get("/")
+        self.assertIn("Access-Control-Allow-Origin", response.headers)
