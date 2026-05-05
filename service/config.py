@@ -4,11 +4,7 @@ Global Configuration for Application
 import os
 
 # Get configuration from environment
-DATABASE_URI = os.getenv("DATABASE_URI")
-
-# Use SQLite if no DATABASE_URI provided
-if not DATABASE_URI:
-    DATABASE_URI = "sqlite:///dev.db"
+DATABASE_URI = os.getenv("DATABASE_URI", "sqlite:////tmp/dev.db")
 
 # Configure SQLAlchemy
 SQLALCHEMY_DATABASE_URI = DATABASE_URI
