@@ -1,0 +1,15 @@
+NAME                                     READY   STATUS      RESTARTS   AGE
+accounts-5cd86f69bc-cp29l                1/1     Running     0          95s
+cd-pipeline-run-f68nb-cleanup-pod        0/1     Completed   0          53m
+cd-pipeline-run-f68nb-clone-pod          0/1     Error       0          53m
+cd-pipeline-run-ppxs5-build-pod          0/1     Completed   0          46m
+cd-pipeline-run-ppxs5-cleanup-pod        0/1     Completed   0          48m
+cd-pipeline-run-ppxs5-clone-pod          0/1     Completed   0          47m
+cd-pipeline-run-ppxs5-deploy-pod         0/1     Completed   0          46m
+cd-pipeline-run-ppxs5-lint-pod           0/1     Completed   0          47m
+cd-pipeline-run-ppxs5-test-pod           0/1     Completed   0          47m
+cd-pipeline-run-tr4kd-cleanup-pod        0/1     Completed   0          51m
+cd-pipeline-run-tr4kd-clone-pod          0/1     Completed   0          51m
+cd-pipeline-run-tr4kd-lint-pod           0/1     Error       0          50m
+openshift-web-console-6844b8c577-7ddrc   2/2     Running     0          64m
+openshift-web-console-6844b8c577-k26lw   2/2     Running     0          64m

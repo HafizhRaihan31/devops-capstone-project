@@ -1,41 +1,37 @@
-#
-# This pipeline needs the following tasks from Tekton Catalog
-#   - git-clone
-#   - flake8
-#
----
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
-metadata:  
+metadata:
   name: cd-pipeline
 spec:
   workspaces:
     - name: pipeline-workspace
+
   params:
     - name: repo-url
     - name: branch
       default: main
+
   tasks:
-    - name: init
-      workspaces:
-        - name: source
-          workspace: pipeline-workspace          
+    - name: cleanup
       taskRef:
         name: cleanup
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
 
     - name: clone
-      workspaces:
-        - name: output
-          workspace: pipeline-workspace          
+      runAfter:
+        - cleanup
       taskRef:
         name: git-clone
+      workspaces:
+        - name: output
+          workspace: pipeline-workspace
       params:
-      - name: url
-        value: $(params.repo-url)
-      - name: revision
-        value: $(params.branch)
-      runAfter:
-        - init
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.branch)
 
     - name: lint
       runAfter:
@@ -45,11 +41,8 @@ spec:
       workspaces:
         - name: source
           workspace: pipeline-workspace
-      params:
-        - name: args
-          value: ["service"]
 
-    - name: tests
+    - name: test
       runAfter:
         - lint
       taskRef:
@@ -57,3 +50,15 @@ spec:
       workspaces:
         - name: source
           workspace: pipeline-workspace
+
+    - name: build
+      runAfter:
+        - test
+      taskRef:
+        name: buildah
+
+    - name: deploy
+      runAfter:
+        - build
+      taskRef:
+        name: kubectl

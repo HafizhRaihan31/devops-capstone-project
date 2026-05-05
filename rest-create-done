@@ -1,0 +1,15 @@
+HTTP/1.1 201 CREATED
+Server: Werkzeug/3.1.3 Python/3.11.14
+Date: Tue, 05 May 2026 12:18:10 GMT
+Content-Type: application/json
+Content-Length: 117
+Location: http://localhost:8000/accounts/2
+Access-Control-Allow-Origin: *
+Permissions-Policy: browsing-topics=()
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'self'; object-src 'none'
+Referrer-Policy: strict-origin-when-cross-origin
+Connection: close
+
+{"address":"bogor","date_joined":"2026-05-05","email":"hafis@example.com","id":2,"name":"hafis","phone_number":null}

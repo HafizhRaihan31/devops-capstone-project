@@ -38,6 +38,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
+          pip install flake8 nose
 
       - name: Lint with flake8
         run: |
@@ -47,3 +48,4 @@ jobs:
       - name: Run tests with nosetests
         run: |
           nosetests
+          
